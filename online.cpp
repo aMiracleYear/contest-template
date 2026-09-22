@@ -39,7 +39,6 @@ void setIO(string s)
 #define eb emplace_back
 #define lexi lexicographical_compare
 #define Test int testing; cin >> testing; while(testing--)
-#define dbg(...) cout << #__VA_ARGS__ << " = ", _print(__VA_ARGS__)
 #define sint(...) int __VA_ARGS__; in(__VA_ARGS__)
 #define sll(...) ll __VA_ARGS__; in(__VA_ARGS__)
 #define sstr(...) string __VA_ARGS__; in(__VA_ARGS__)
@@ -59,49 +58,7 @@ const int dy4[4] = {0, 1, 0, -1};
 const int dx8[8] = {1, 1, 0, -1, -1, -1, 0, 1};
 const int dy8[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 // ----------------------------------------------------------------------------------------
-// universal shorthands
-template<class T> using V = vector<T>;                  // dynamic array
-template<class T, size_t N> using A = array<T, N>;      // fixed-size array
-// *** Primitive short aliases ***
-using ll = long long;
-using ld = long double;
-using ull = unsigned long long;
-// *** Container/type shortcuts ***
-using vch = vector<char>;
-using vvch = vector<vch>;
-using vvcc = vector<vch>;
-using vll = vector<ll>;
-using vvll = vector<vll>;
-using vii = vector<int>;
-using vvii = vector<vii>;
-using vecs = vector<string>;
-// *** Pair shortcuts ***
-using P = pair<ll,ll>;
-using pll = pair<ll,ll>;
-using pdd = pair<ld,ld>;
-using pii = pair<int,int>;
-// *** Vector of pairs ***
-using vpii = vector<pii>;
-using vvpii = vector<vpii>;
-using vpll = vector<pll>;
-using vvpll = vector<vpll>;
-using vpci = vector<pair<char,int>>;
-using vpcl = vector<pair<char,ll>>;
-// *** Boolean and set containers ***
-using vbl = vector<bool>;
-using vvbl = vector<vbl>;
-using usetii = unordered_set<int>;
-using usetll = unordered_set<ll>;
-using setii = set<int>;
-using setll = set<ll>;
-using setstr = set<string>;
-using usetpll = unordered_set<pll>;
-using usetpii = unordered_set<pii>;
-// *** Stack shortcuts ***
-using stkint = stack<int>;
-using stkll = stack<ll>;
-using stkpii = stack<pii>;
-using stkpll = stack<pll>;
+
 static constexpr ll MOD9 = 998244353;
 static constexpr ll MODe = 1000000007;
 // ----------------------------------------------------------------------------------------
@@ -475,7 +432,6 @@ void dbg(const char* expressions, const Args&... args) {
 
 } // namespace debug
 
-
 #ifndef ONLINE_JUDGE
     #define dbg(...) debug::dbg(#__VA_ARGS__, __VA_ARGS__)
 #else
@@ -525,108 +481,7 @@ struct SegTree {
         tree[node] = tree[2*node] + tree[2*node+1];
     }
 };
-//Quick Graph Builder:
-vvll build_adj(ll n, ll m, ll base=1,bool directed = false){
-    vvll adj(n + 1);
-    for(ll i=0,u,v; i<m; ++i){
-        in(u,v);
-        u-=base,v-=base;
-        if (!directed) adj[u].pb(v),adj[v].pb(u);
-        else adj[u].pb(v);
-    }
-    return adj;
-}
 
-template <typename T>
-V<V<T>> readGrid(ll H, ll W, bool withSpaces = false) {
-    V<V<T>> grid(H, V<T>(W));
-    for (int i = 0; i < H; i++) {
-        if (is_same<T, char>::value && !withSpaces) {
-            string row; cin >> row;
-            for (int j = 0; j < W; j++) grid[i][j] = row[j];
-        } else {
-            for (int j = 0; j < W; j++) cin >> grid[i][j];
-        }
-    }
-    return grid;
-}
-// LCA — Binary Lifting
-struct LCA {
-    ll n, LOG;
-    vvll adj;
-    vvll par;     // par[v][j] = 2^j-th ancestor
-    vll depth;
-
-    LCA(ll n) : n(n) {
-        LOG = __lg(n) + 1;
-        adj.assign(n, {});
-        par.assign(n, vll(LOG, -1));
-        depth.assign(n, 0);
-    }
-
-    // add undirected edge
-    void add_edge(ll u, ll v) {
-        adj[u].pb(v);
-        adj[v].pb(u);
-    }
-
-    // DFS to set depth + immediate parent
-    void dfs(ll v, ll p) {
-        par[v][0] = p;
-        for (ll to : adj[v]) {
-            if (to == p) continue;
-            depth[to] = depth[v] + 1;
-            dfs(to, v);
-        }
-    }
-
-    // build LCA table
-    void build(ll root = 0) {
-        dfs(root, -1);
-        for (ll j = 1; j < LOG; j++) {
-            for (ll i = 0; i < n; i++) {
-                if (par[i][j-1] != -1)
-                    par[i][j] = par[par[i][j-1]][j-1];
-            }
-        }
-    }
-
-    // kth ancestor of node v
-    ll kth_parent(ll v, ll k) {
-        for (ll j = 0; j < LOG; j++) {
-            if (k & (1LL << j)) {
-                v = par[v][j];
-                if (v == -1) break;
-            }
-        }
-        return v;
-    }
-
-    // lowest common ancestor
-    ll lca(ll a, ll b) {
-        if (depth[a] < depth[b]) swap(a, b);
-
-        // lift a to same depth
-        a = kth_parent(a, depth[a] - depth[b]);
-
-        if (a == b) return a;
-
-        for (ll j = LOG - 1; j >= 0; j--) {
-            if (par[a][j] != par[b][j]) {
-                a = par[a][j];
-                b = par[b][j];
-            }
-        }
-        return par[a][0];
-    }
-
-    // distance between two nodes
-    ll dist(ll a, ll b) {
-        ll c = lca(a, b);
-        return depth[a] + depth[b] - 2 * depth[c];
-    }
-};
-    
 // Tarjans Algorithm for SCC
 struct SCC
 {
