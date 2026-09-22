@@ -53,41 +53,52 @@ void setIO(string s)
 #define fi first
 #define se second
 #define str(x) to_string(x)
-const int dx4[4] = {1, 0, -1, 0};
-const int dy4[4] = {0, 1, 0, -1};
-const int dx8[8] = {1, 1, 0, -1, -1, -1, 0, 1};
-const int dy8[8] = {0, 1, 1, 1, 0, -1, -1, -1};
-// ----------------------------------------------------------------------------------------
-
-static constexpr ll MOD9 = 998244353;
-static constexpr ll MODe = 1000000007;
-// ----------------------------------------------------------------------------------------
+using ll  = long long;
+using ull = unsigned long long;
+using ld  = long double;
+using i128 = __int128_t;
+using u128 = __uint128_t;
+template<class T>
+using V = vector<T>;
+template<class A, class B>
+using P = pair<A, B>;
+using vll  = vector<ll>;
+using vb   = vector<bool>;
+using vc   = vector<char>;
+using vs   = vector<string>;
+using vvll = vector<vll>;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
+using vpii = vector<pii>;
 template<class T> auto vmin(const T& a){ return *min_element(all(a)); }
 template<class T> auto vmax(const T& a){ return *max_element(all(a)); }
 template<class T, class U> bool chmin(T& a, const U& b){ if(a > T(b)){ a = b; return 1; } return 0; }
 template<class T, class U> bool chmax(T& a, const U& b){ if(a < T(b)){ a = b; return 1; } return 0; }
-template <class T = ll, class S> T sum(const S &v) { return accumulate(all(v), T(0)); }
 template<typename T>using maxpq = priority_queue<T>;
 template<typename T> using minpq = priority_queue<T, vector<T>, greater<T>>;
+const int dx4[4] = {1, 0, -1, 0};
+const int dy4[4] = {0, 1, 0, -1};
+const int dx8[8] = {1, 1, 0, -1, -1, -1, 0, 1};
+const int dy8[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+static constexpr ll MOD9 = 998244353;
+static constexpr ll MODe = 1000000007;
+
 /* input */
+
 template<class T>
 void scan(T& x) {
     cin >> x;
 }
-
 template<class A, class B>
 void scan(pair<A, B>& p) {
     scan(p.first);
     scan(p.second);
 }
-
 template<class T>
 void scan(vector<T>& v) {
     for (auto& x : v)
         scan(x);
 }
-
-// vector<bool> needs special handling
 inline void scan(vector<bool>& v) {
     for (size_t i = 0; i < v.size(); i++) {
         int x;
@@ -95,43 +106,38 @@ inline void scan(vector<bool>& v) {
         v[i] = x;
     }
 }
-
 template<class T>
 void scan(deque<T>& v) {
     for (auto& x : v)
         scan(x);
 }
-
 template<class T, size_t N>
 void scan(array<T, N>& a) {
     for (auto& x : a)
         scan(x);
 }
-
 template<class T, size_t N>
 void scan(T (&a)[N]) {
     for (auto& x : a)
         scan(x);
 }
-
 template<class... Ts>
 void in(Ts&... xs) {
     (scan(xs), ...);
 }
+
 /* output */
 
 template<class T>
 void print(const T& x) {
     cout << x;
 }
-
 template<class A, class B>
 void print(const pair<A, B>& p) {
     print(p.first);
     cout << ' ';
     print(p.second);
 }
-
 template<class T>
 void print(const vector<T>& v) {
     for (size_t i = 0; i < v.size(); i++) {
@@ -139,7 +145,6 @@ void print(const vector<T>& v) {
         print(v[i]);
     }
 }
-
 template<class T>
 void print(const deque<T>& v) {
     for (size_t i = 0; i < v.size(); i++) {
@@ -147,7 +152,6 @@ void print(const deque<T>& v) {
         print(v[i]);
     }
 }
-
 template<class T, size_t N>
 void print(const array<T, N>& a) {
     for (size_t i = 0; i < N; i++) {
@@ -155,7 +159,6 @@ void print(const array<T, N>& a) {
         print(a[i]);
     }
 }
-
 template<class T>
 void print(const set<T>& s) {
     bool first = true;
@@ -165,7 +168,6 @@ void print(const set<T>& s) {
         print(x);
     }
 }
-
 template<class T>
 void print(const multiset<T>& s) {
     bool first = true;
@@ -175,18 +177,18 @@ void print(const multiset<T>& s) {
         print(x);
     }
 }
-
 inline void out() {
     cout << '\n';
 }
-
 template<class Head, class... Tail>
 void out(const Head& head, const Tail&... tail) {
     print(head);
     ((cout << ' ', print(tail)), ...);
     cout << '\n';
 }
+
 /* debug */
+
 namespace debug {
 
 template<class T>
@@ -195,13 +197,11 @@ struct is_pair : false_type {};
 template<class A, class B>
 struct is_pair<pair<A, B>> : true_type {};
 
-
 template<class T>
 struct is_tuple : false_type {};
 
 template<class... Ts>
 struct is_tuple<tuple<Ts...>> : true_type {};
-
 
 template<class T, class = void>
 struct is_iterable : false_type {};
@@ -219,7 +219,6 @@ struct is_iterable<
 template<class T>
 void print(const T& x);
 
-
 template<class Tuple, size_t... I>
 void print_tuple(const Tuple& t, index_sequence<I...>) {
     cerr << '(';
@@ -231,7 +230,6 @@ void print_tuple(const Tuple& t, index_sequence<I...>) {
 
     cerr << ')';
 }
-
 
 template<class T>
 void print(const T& x) {
@@ -288,9 +286,6 @@ void print(const T& x) {
     }
 }
 
-
-/* stack */
-
 template<class T>
 void print(stack<T> s) {
     cerr << '[';
@@ -309,9 +304,6 @@ void print(stack<T> s) {
 
     cerr << ']';
 }
-
-
-/* queue */
 
 template<class T>
 void print(queue<T> q) {
@@ -332,9 +324,6 @@ void print(queue<T> q) {
     cerr << ']';
 }
 
-
-/* priority_queue */
-
 template<class T, class Container, class Compare>
 void print(priority_queue<T, Container, Compare> q) {
     cerr << '[';
@@ -353,19 +342,6 @@ void print(priority_queue<T, Container, Compare> q) {
 
     cerr << ']';
 }
-
-
-/*
-Splits:
-
-dbg(a, b, f(x, y))
-
-into
-
-"a"
-"b"
-"f(x, y)"
-*/
 
 vector<string> names(string s) {
     vector<string> result;
@@ -410,7 +386,6 @@ vector<string> names(string s) {
     return result;
 }
 
-
 template<class... Args>
 void dbg(const char* expressions, const Args&... args) {
 
@@ -437,203 +412,7 @@ void dbg(const char* expressions, const Args&... args) {
 #else
     #define dbg(...) ((void)0)
 #endif
-// Range Query Data Structures
-//Segment Tree
-struct SegTree {
-    ll n;
-    vll tree;
 
-    SegTree(ll _n) {
-        n = _n;
-        tree.assign(4*n, 0);
-    }
-
-
-    void build(ll node, ll l, ll r, vll &a) {
-        if (l == r) {
-            tree[node] = a[l];
-            return;
-        }
-        ll mid = (l + r) / 2;
-        build(2*node, l, mid, a);
-        build(2*node+1, mid+1, r, a);
-        tree[node] = tree[2*node] + tree[2*node+1];
-    }
-
-
-    ll query(ll node, ll l, ll r, ll ql, ll qr) {
-        if (qr < l || r < ql) return 0;              
-        if (ql <= l && r <= qr) return tree[node];  
-        ll mid = (l + r) / 2;
-        return query(2*node, l, mid, ql, qr)
-            + query(2*node+1, mid+1, r, ql, qr);
-    }
-
-
-    void update(ll node, ll l, ll r, ll pos, ll val) {
-        if (l == r) {
-            tree[node] = val;
-            return;
-        }
-        ll mid = (l + r) / 2;
-        if (pos <= mid) update(2*node, l, mid, pos, val);
-        else update(2*node+1, mid+1, r, pos, val);
-        tree[node] = tree[2*node] + tree[2*node+1];
-    }
-};
-
-// Tarjans Algorithm for SCC
-struct SCC
-{
-    ll n,timer=0,compcnt=0;
-    vvll g;
-    vll disc,low,comp;
-    stkll stk;
-    vbl instack;
-    
-    SCC(ll n) : n(n), g(n), disc(n,-1), low(n), comp(n,-1), instack(n,false){}
-    
-    void add_edge(ll u,ll v)
-    {
-        g[u].pb(v);
-    }
-    
-    void dfs(ll u)
-    {
-        disc[u] = low[u] = ++timer;
-        stk.push(u);
-        instack[u]=true;
-        
-        each(v,g[u])
-        {
-            if (disc[v]==-1)
-            {
-                dfs(v);
-                chmin(low[u],low[v]);
-            }
-            elif (instack[v])
-            {
-                chmin(low[u],disc[v]);
-            }
-        }
-        
-        if (low[u]==disc[u])
-        {
-            while(true)
-            {
-                ll v = stk.top();stk.pop();
-                instack[v] = false;
-                comp[v] = compcnt;
-                if (v==u) break;
-            }
-            compcnt++;
-        }
-    }
-    
-    void run()
-    {
-        rep(i,0,n)
-        {
-            if (disc[i]==-1) dfs(i);
-        }
-    }
-};
-// DSU Algorithm
-struct DSU {
-    vector<ll> parent, size;
-    ll component_count;
-    ll max_comp_size;
-
-    DSU(ll n)
-    {
-        parent.resize(n);
-        size.assign(n, 1);
-
-        rep(i, n) parent[i] = i;
-
-        component_count = n;
-        max_comp_size = 1;
-    }
-
-    // find leader with path compression
-    ll leader(ll x)
-    {
-        if (parent[x] == x) return x;
-        return parent[x] = leader(parent[x]);
-    }
-
-    // merge two sets
-    bool merge(ll x, ll y)
-    {
-        ll rx = leader(x);
-        ll ry = leader(y);
-
-        if (rx == ry) return false;
-
-        // union by size
-        if (size[rx] < size[ry]) swap(rx, ry);
-
-        parent[ry] = rx;
-        size[rx] += size[ry];
-
-        component_count--;
-        max_comp_size = max(max_comp_size, size[rx]);
-        return true;
-    }
-
-    // are x and y in the same set?
-    bool same(ll x, ll y)
-    {
-        return leader(x) == leader(y);
-    }
-
-    // size of the set containing x
-    ll setsz(ll x)
-    {
-        return size[leader(x)];
-    }
-};
-//primes upto
-const int residues[] = {1, 7, 11, 13, 17, 19, 23, 29};
-vll primes_upto(ll n) 
-{
-    if (n < 2) return {};
-
-    bitset<50000001> is_prime;
-    is_prime.set();
-    is_prime[0] = 0; // 1 is not prime
-
-    vll primes = {2, 3, 5};
-
-    int sqrt_n = sqrt(n);
-
-    for (int p = 7; p <= sqrt_n; p += 2) {
-        // Check only numbers coprime to 2, 3, 5
-        ll mod30 = p % 30;
-        bool good = false;
-        each(r,residues)
-            if (r == mod30) good = true;
-
-        if (!good) continue;
-        if (!is_prime[p/2]) continue;
-
-        for (int j = p*p; j <= n; j += 2*p) {
-            is_prime[j/2] = 0;
-        }
-    }
-
-    for (int p = 7; p <= n; p += 2) {
-        int mod30 = p % 30;
-        each(r,residues) {
-            if (mod30 == r) {
-                if (is_prime[p/2]) primes.push_back(p);
-                break;
-            }
-        }
-    }
-
-    return primes;
-}
 ll power(ll a, ll b) 
 {
     ll result = 1;
