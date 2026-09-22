@@ -520,7 +520,11 @@ mint nCr(ll n, ll r) {
     return fact[n] * invfact[r] * invfact[n - r];
 }
 
+void solve(){
+
+}
+
 int main()
 {
-
+    Test{ solve(); }
 }
